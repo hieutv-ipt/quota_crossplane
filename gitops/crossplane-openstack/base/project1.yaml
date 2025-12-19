@@ -1,0 +1,46 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: os-prj-ttdmst
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: TTDMST
+    description: "Trung tam doi moi sang tao"
+    enabled: true
+
+---
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: os-prj-dvs
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: DVS
+    description: "Cong ti DVS"
+    enabled: true
+
+---
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: os-prj-ttcntt
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: TTCNTT
+    description: "Trung tam CNTT"
+    enabled: true

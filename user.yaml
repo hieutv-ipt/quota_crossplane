@@ -1,0 +1,17 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: UserV3
+metadata:
+  name: morpheus
+  namespace: crossplane-system
+  annotations:
+    crossplane.io/external-name: 7b7c20e00d09421390e27ba5e945d634   # openstack user show morpheus -f value -c id
+spec:
+  managementPolicies: ["Observe"]
+  deletionPolicy: Orphan
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: morpheus
+    region: RegionOne
+    enabled: true
+    domainId: defaulti 

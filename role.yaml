@@ -1,0 +1,28 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleV3
+metadata:
+  name: role-member
+  annotations:
+    crossplane.io/external-name: 1a51599fed744ac292f4e5d3c862ff9f
+spec:
+  managementPolicies: ["Observe"]                     # adopt-only
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: member
+    region: RegionOne
+
+---
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleV3
+metadata:
+  name: role-reader
+  annotations:
+    crossplane.io/external-name: f66bb696e7d94b09be4c328de967d14e
+spec:
+  managementPolicies: ["Observe"]
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: reader
+    region: RegionOne

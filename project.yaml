@@ -1,0 +1,22 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: ProjectV3
+metadata:
+  name: vnpost                             # must match projectIdRef.name
+  namespace: crossplane-system
+  annotations:
+    crossplane.io/external-name: bf6873c24272422f9fd3feb87c0fe7b7   # output of: openstack project show vnpost -f value -c id
+spec:
+  managementPolicies: ["Observe"]                 # adopt-only; no mutate
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    name: vnpost
+    region: RegionOne
+    # If needed, point to the domain explicitly (choose ONE of the following):
+    # domainId: <DOMAIN_UUID>
+    # or:
+    # domainIdRef:
+    #   name: default-domain
+    #   policy: { resolution: "Required", resolve: "Always" }
+    enabled: true
+    description: "VNPost project (adopted)"
+

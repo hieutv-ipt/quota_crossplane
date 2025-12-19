@@ -1,0 +1,118 @@
+# =========================
+# Quota pack for one project
+# Uses projectIdRef (auto-retarget) + 1-minute polling from your provider runtime
+# =========================
+
+# --- Nova (compute) quotas ---
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: QuotasetV2
+metadata:
+  name: qpack-compute
+  namespace: crossplane-system
+  labels: {policy: baseline}
+  annotations:
+    infra.allow-delete: "false"
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]   # authoritative; no delete
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectIdRef:
+      name: bf6873c24272422f9fd3feb87c0fe7b7
+      policy:
+        resolution: Required
+        resolve: Always
+    # ---- set limits to your policy ----
+    instances: 200
+    cores: 800
+    ram: 2048000              # MiB
+    serverGroups: 50
+    serverGroupMembers: 500
+
+---
+# --- Neutron (networking) quotas ---
+# NOTE: field names are SINGULAR (network, subnet, port, router, floatingip, securityGroup, securityGroupRule)
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: QuotaV2
+metadata:
+  name: qpack-network
+  namespace: crossplane-system
+  labels: {policy: baseline}
+  annotations:
+    infra.allow-delete: "false"
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectIdRef:
+      name: bf6873c24272422f9fd3feb87c0fe7b7
+      policy:
+        resolution: Required
+        resolve: Always
+    # ---- set limits to your policy ----
+    network: 200
+    subnet: 400
+    port: 20000
+    router: 200
+    floatingip: 1000
+    securityGroup: 200
+    securityGroupRule: 5000
+
+---
+# --- Cinder (block storage) quotas ---
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QuotasetV3
+metadata:
+  name: qpack-block
+  namespace: crossplane-system
+  labels: {policy: baseline}
+  annotations:
+    infra.allow-delete: "false"
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectIdRef:
+      name: bf6873c24272422f9fd3feb87c0fe7b7
+      policy:
+        resolution: Required
+        resolve: Always
+    # ---- set limits to your policy ----
+    volumes: 2000
+    snapshots: 2000
+    gigabytes: 200000        # total GB across all types
+    backups: 500
+    backupGigabytes: 100000
+
+---
+# --- Octavia (load balancer) quotas ---
+apiVersion: lb.openstack.crossplane.io/v1alpha1
+kind: QuotaV2
+metadata:
+  name: qpack-lb
+  namespace: crossplane-system
+  labels: {policy: baseline}
+  annotations:
+    infra.allow-delete: "false"
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectIdRef:
+      name: bf6873c24272422f9fd3feb87c0fe7b7
+      policy:
+        resolution: Required
+        resolve: Always
+    # ---- set limits to your policy ----
+    loadbalancer: 200
+    listener: 400
+    pool: 400
+    member: 4000
+

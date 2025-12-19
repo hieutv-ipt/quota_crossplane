@@ -1,0 +1,41 @@
+apiVersion: v1
+items:
+- apiVersion: pkg.crossplane.io/v1beta1
+  kind: DeploymentRuntimeConfig
+  metadata:
+    name: provider-openstack-runtime
+  spec:
+    deploymentTemplate:
+      spec:
+        selector:
+          matchLabels:
+            pkg.crossplane.io/provider: provider-openstack
+        template:
+          metadata:
+            labels:
+              pkg.crossplane.io/provider: provider-openstack
+          spec:
+            containers:
+            - args:
+              - --poll=1m
+              - --max-reconcile-rate=20
+              env:
+              - name: SSL_CERT_FILE
+                value: /etc/ssl/certs/openstack/ca.crt
+              - name: OS_CACERT
+                value: /etc/ssl/certs/openstack/ca.crt
+              name: package-runtime
+              volumeMounts:
+              - mountPath: /etc/ssl/certs/openstack
+                name: osp-ca
+                readOnly: true
+            volumes:
+            - configMap:
+                items:
+                - key: ca.crt
+                  path: ca.crt
+                name: opesntack-rootca
+              name: osp-ca
+kind: List
+metadata:
+  resourceVersion: ""

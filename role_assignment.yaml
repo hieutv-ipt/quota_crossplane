@@ -1,0 +1,19 @@
+apiVersion: identity.openstack.crossplane.io/v1alpha1
+kind: RoleAssignmentV3
+metadata:
+  name: ra-vnpost-alice-reader
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    projectIdRef:
+      name: vnpost
+      policy: { resolution: Required, resolve: Always }
+    userIdRef:
+      name: morpheus                      # your UserV3 CR name
+      policy: { resolution: Required, resolve: Always }
+    roleIdRef:
+      name: role-reader
+      policy: { resolution: Required, resolve: Always }

@@ -1,0 +1,77 @@
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: SecgroupV2
+metadata:
+  name: vnpost-baseline-sg
+  annotations:
+    crossplane.io/external-name: vnpost-baseline-sg   # adopt name if exists
+  labels:
+    owner: "cloud-platform"
+    env: "prod"
+    cost-center: "it-ops"
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  providerConfigRef:
+    name: provider-openstack-config
+  forProvider:
+    name: vnpost-baseline-sg
+    description: "Baseline egress-only policy"
+    tags: ["owner","env","cost-center"]  # Gatekeeper checks presence, not values
+---
+
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: SecgroupRuleV2
+metadata:
+  name: vnpost-sg-egress-dns
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: [Observe, Create, Update, Delete, LateInitialize]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    securityGroupIdRef: { name: vnpost-baseline-sg }
+    direction: egress
+    ethertype: IPv4
+    protocol: udp
+    portRangeMin: 53
+    portRangeMax: 53
+    remoteIpPrefix: 0.0.0.0/0
+    description: managed:baseline-egress-dns
+---
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: SecgroupRuleV2
+metadata:
+  name: vnpost-sg-egress-http
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: [Observe, Create, Update, Delete, LateInitialize]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    securityGroupIdRef: { name: vnpost-baseline-sg }
+    direction: egress
+    ethertype: IPv4
+    protocol: tcp
+    portRangeMin: 80
+    portRangeMax: 80
+    remoteIpPrefix: 0.0.0.0/0
+    description: managed:baseline-egress-http
+---
+apiVersion: networking.openstack.crossplane.io/v1alpha1
+kind: SecgroupRuleV2
+metadata:
+  name: vnpost-sg-egress-https
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: [Observe, Create, Update, Delete, LateInitialize]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    securityGroupIdRef: { name: vnpost-baseline-sg }
+    direction: egress
+    ethertype: IPv4
+    protocol: tcp
+    portRangeMin: 443
+    portRangeMax: 443
+    remoteIpPrefix: 0.0.0.0/0
+    description: managed:baseline-egress-https

@@ -1,0 +1,6 @@
+
+openstack-secret.yaml
+**/*secret*.yaml
+*token*
+*.pem
+*.key

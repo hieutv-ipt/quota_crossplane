@@ -1,6 +1,5 @@
 # =========================
 # Quotas for 3 projects: TTDMST, DVS, TTCNTT
-# Using projectId (UUID) to avoid reference resolution issues
 # =========================
 
 # -------------------------

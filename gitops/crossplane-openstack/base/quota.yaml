@@ -1,18 +1,11 @@
 # =========================
-# Quotas for 3 projects: TTDMST, DVS, TTCNTT
+# TTDMST
 # =========================
-
-# -------------------------
-# TTDMST (2420b0c0a5ae4f738e291d9462eecc1c)
-# -------------------------
 apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: QuotasetV2
 metadata:
-  name: qpack-compute-ttdmst
+  name: quota-nova-ttdmst
   namespace: crossplane-system
-  labels: {policy: baseline}
-  annotations:
-    infra.allow-delete: "false"
 spec:
   deletionPolicy: Orphan
   managementPolicies: ["Observe","Create","Update"]
@@ -20,23 +13,32 @@ spec:
   forProvider:
     region: RegionOne
     projectId: 2420b0c0a5ae4f738e291d9462eecc1c
-    instances: 1977
     cores: 1977
-    ram: 6939648 # MiB (6777 GiB * 1024)
-    serverGroups: 50
-    serverGroupMembers: 500
-# -------------------------
-# DVS (ded5af59b056479eb7af86c91c094d5c)
-# -------------------------
+    ram: 6939648
+---
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QuotasetV3
+metadata:
+  name: quota-cinder-ttdmst
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectId: 2420b0c0a5ae4f738e291d9462eecc1c
+    gigabytes: 158493
+
+# =========================
+# DVS
+# =========================
 ---
 apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: QuotasetV2
 metadata:
-  name: qpack-compute-dvs
+  name: quota-nova-dvs
   namespace: crossplane-system
-  labels: {policy: baseline}
-  annotations:
-    infra.allow-delete: "false"
 spec:
   deletionPolicy: Orphan
   managementPolicies: ["Observe","Create","Update"]
@@ -44,23 +46,32 @@ spec:
   forProvider:
     region: RegionOne
     projectId: ded5af59b056479eb7af86c91c094d5c
-    instances: 2644
     cores: 2644
-    ram: 5350400 # MiB (5225 GiB * 1024)
-    serverGroups: 50
-    serverGroupMembers: 500
-# -------------------------
-# TTCNTT (7c9aaa5c45cb40fa89aa9ebbe5a8d9fb)
-# -------------------------
+    ram: 5350400
+---
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QuotasetV3
+metadata:
+  name: quota-cinder-dvs
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectId: ded5af59b056479eb7af86c91c094d5c
+    gigabytes: 247309
+
+# =========================
+# TTCNTT
+# =========================
 ---
 apiVersion: compute.openstack.crossplane.io/v1alpha1
 kind: QuotasetV2
 metadata:
-  name: qpack-compute-ttcntt
+  name: quota-nova-ttcntt
   namespace: crossplane-system
-  labels: {policy: baseline}
-  annotations:
-    infra.allow-delete: "false"
 spec:
   deletionPolicy: Orphan
   managementPolicies: ["Observe","Create","Update"]
@@ -68,8 +79,19 @@ spec:
   forProvider:
     region: RegionOne
     projectId: 7c9aaa5c45cb40fa89aa9ebbe5a8d9fb
-    instances: 400
     cores: 400
-    ram: 2560000 # MiB (2500 GiB * 1024)
-    serverGroups: 50
-    serverGroupMembers: 500
+    ram: 2560000
+---
+apiVersion: blockstorage.openstack.crossplane.io/v1alpha1
+kind: QuotasetV3
+metadata:
+  name: quota-cinder-ttcntt
+  namespace: crossplane-system
+spec:
+  deletionPolicy: Orphan
+  managementPolicies: ["Observe","Create","Update"]
+  providerConfigRef: { name: provider-openstack-config }
+  forProvider:
+    region: RegionOne
+    projectId: 7c9aaa5c45cb40fa89aa9ebbe5a8d9fb
+    gigabytes: 200000

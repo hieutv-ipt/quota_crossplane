@@ -79,7 +79,7 @@ spec:
   forProvider:
     region: RegionOne
     projectId: 7c9aaa5c45cb40fa89aa9ebbe5a8d9fb
-    cores: 400
+    cores: 456
     ram: 2560000
 ---
 apiVersion: blockstorage.openstack.crossplane.io/v1alpha1

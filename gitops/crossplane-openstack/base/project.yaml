@@ -9,7 +9,7 @@ spec:
   providerConfigRef:
     name: provider-openstack-config
   forProvider:
-    name: TTDMST
+    name: dung_dt
     description: "Trung tam doi moi sang tao"
     enabled: true
 

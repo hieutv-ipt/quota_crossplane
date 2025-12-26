@@ -9,7 +9,7 @@ spec:
   providerConfigRef:
     name: provider-openstack-config
   forProvider:
-    name: dung_dt
+    name: lam
     description: "Trung tam doi moi sang tao"
     enabled: true
 

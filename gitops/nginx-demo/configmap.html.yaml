@@ -10,6 +10,6 @@ data:
       <head><meta charset="utf-8"><title>Hello</title></head>
       <body style="font-family: sans-serif;">
         <h1>Hello world</h1>
-        <h2> hihieheh <h2>
+        <h2> hihieheh </h2>
       </body>
     </html>

@@ -1,0 +1,13 @@
+apiVersion: compute.openstack.crossplane.io/v1alpha1
+kind: InstanceV2
+metadata:
+  name: testvm
+spec:
+  forProvider:
+    name: testVM
+    imageName: cirros
+    flavorName: small
+    network:
+      - name: provider
+  providerConfigRef:
+    name: openstack

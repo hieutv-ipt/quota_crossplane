@@ -4,5 +4,6 @@ namespace: demo
 resources:
   - project.yaml
   - quota.yaml
+  - testvm.yaml
 
   
